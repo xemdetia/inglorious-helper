@@ -33,24 +33,25 @@ xemdetia
   2. Difficulty of managing a test framework consistently across build
      environments.
 
-     If you assume that you are building for two systems, this counts as
-     two build environments. In case 2 it is also true that a testing
-     environment is also a build environment which has to be maintained
-     across more than one platform. If you are a single developer that
-     means that you have 4 build environments to maintain and try to keep
-     consistent and the author has never really found a way to do
-     it. Even in using an IDE you still usually have to do a lot of
-     fiddling to try and make sure everything stays consistent.
+  If you assume that you are building for two systems, this counts as
+  two build environments. In case 2 it is also true that a testing
+  environment is also a build environment which has to be maintained
+  across more than one platform. If you are a single developer that
+  means that you have 4 build environments to maintain and try to keep
+  consistent and the author has never really found a way to do
+  it. Even in using an IDE you still usually have to do a lot of
+  fiddling to try and make sure everything stays consistent.
 
-     Beyond those two cases you also have the problem of trying to create
-     debug builds, production builds and packaging/install buildsthe list
-     goes on. Again the author of this software has never really found a
-     good answer to this problem.
 
-     Beyond the build system, there are also possibilities for simple
-     code/project management. If you are an emacs user one of the simple
-     cross-platform methods for code searching is a mix of grep and TAGS
-     files. Any help there would be appreciated.
+  Beyond those two cases you also have the problem of trying to create
+  debug builds, production builds and packaging/install buildsthe list
+  goes on. Again the author of this software has never really found a
+  good answer to this problem.
+
+  Beyond the build system, there are also possibilities for simple
+  code/project management. If you are an emacs user one of the simple
+  cross-platform methods for code searching is a mix of grep and TAGS
+  files. Any help there would be appreciated.
 
 * Design Goals
   
