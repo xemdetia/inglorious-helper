@@ -159,7 +159,71 @@
     implicitly available. After poking around we created a function
     called =inglorious-mode-connect= which is relatively functional
     for now.
+
+    While exploring tests for this I had some oddities trying to work
+    with subprocesses. Even when the kill message was delivered it
+    wasn't completing the processes, and our goal was to run netcat to
+    grab the IO. Instead what I think I will do is use elisp to make a
+    local server and have it connect to that. Either way I think we've
+    done enough here and should start working on the clojure side.
 *** TODO Create server in clojure
-    
-    
-    
+** Create a UI in Emacs
+   
+   This whole toolchain is only helpful when it integrates with
+   something so I need to develop how the UI is supposed to
+   look. Changing colours for random samples of text is done with
+   [[http://www.gnu.org/software/emacs/manual/html_node/elisp/Changing-Properties.html][propertize]]. It's also good to read about the possible faces you are
+   allowed to give fonts which was listed [[http://www.gnu.org/software/emacs/manual/html_node/elisp/Face-Attributes.html#Face-Attributes][here]].
+** Select a elisp Test Framework
+
+   While later versions of Emacs (namely 24.*+) have ERT built in,
+   Emacs 23 does not. Right now I think the thing to do is to upgrade
+   to 24, since it really has become a problem. Every other solution I
+   can think of would require us to ship some form of testing
+   framework with this product so that will not work at all.
+
+   After a quick unpack-compile-configure we are now on emacs 24. So
+   from now on we will use the built in ert tests to construct the UI.
+
+   First off is to define how it is supposed to look and feel. In
+   general after tests are run the failed tests should be lifted to
+   the top of the listing of all tests while the passed tests should
+   gravitate towards the bottom. Tests that are excluded should be put
+   in a narrowed region between the passed tests and the failed tests
+   because it should be known that any tests were skipped for any
+   reason. In general these narrowed regions should be expandable much
+   like org-mode headings.
+
+   At this point keeping it simple is best so we won't worry about
+   grouped tests until further on. We are going to use one data set to
+   construct this:
+
+   #+begin_src elisp
+     '(:fail ((:name "test_002"
+               :reason "On Line -1, -1: expected 5\n got 3."))
+       :pass ((:name "test_000")
+              (:name "test_001")))
+   #+end_src
+
+   So the ideal rendering function would seem to be:
+
+   #+begin_src elisp
+     (defun inglorious-mode-show-results (buf results) ... )
+   #+end_src
+
+   Where buf is the buffer to write into and results is a data
+   structure much like the one before. Also because the author forgot
+   how to use plists:
+
+   #+begin_src elisp
+     (defvar testerx     '(:fail ((:name "test_002"
+                    :reason "On Line -1, -1: expected 5\n got 3."))
+            :pass ((:name "test_000")
+                   (:name "test_001"))))
+     
+     (plist-get testerx :tel)   
+   #+end_src
+
+   The docs provide a symbol-plist which is a different can of worms
+   than the more CLOS version of just using lists, which was a bit
+   confusing until the difference made itself clear.
