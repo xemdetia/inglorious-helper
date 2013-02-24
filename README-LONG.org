@@ -154,6 +154,11 @@
     people would want NCat. Unfortunately it is a GPL licensed thing
     and so I might look for a BSD/MIT equivalent so I can distribute
     it without causing a ruckus.
+
+    I shifted over to my Debian computer for a while now, so netcat is
+    implicitly available. After poking around we created a function
+    called =inglorious-mode-connect= which is relatively functional
+    for now.
 *** TODO Create server in clojure
     
     

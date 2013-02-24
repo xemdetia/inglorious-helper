@@ -32,6 +32,17 @@
   "Represents the socket for the server connection. Use
   inglorious-mode-connect to set this value.")
 
+;;; operators on the mode-stream
+(defun inglorious-mode-close-stream ()
+  "*If there is an existing stream in the internal variable
+  inglorious-mode-stream, close it."
+  (interactive)
+  (if inglorious-mode-stream
+      (progn (quit-process inglorious-mode-stream)
+	     (setq inglorious-mode-stream nil)
+	     t)
+    nil))
+
 (defun inglorious-mode-connect (host port)
   "Using the given host and port connect to a foreign
   inglorious-helper instance. If either host or port is nil they use
@@ -52,10 +63,20 @@
 		  inglorious-mode-default-host))
 	 (portv (if port
 		    port
-		  inglorious-mode-default-host)))
-    (open-network-stream "inglorious-mode-tcp-stream" (inglorious-mode-get-debug-buffer) hostv portv)))
+		  inglorious-mode-default-port)))
+    (progn (when inglorious-mode-stream
+	     (inglorious-mode-close-stream))
+	   (condition-case nil
+	       (open-network-stream "inglorious-mode-tcp-stream" 
+				    (inglorious-mode-get-debug-buffer) 
+				    hostv portv)
+	     (file-error nil)))))
 
 (inglorious-mode-connect nil nil)
+  
+
+	 
+
 		
 
   
